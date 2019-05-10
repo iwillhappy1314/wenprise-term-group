@@ -63,7 +63,7 @@ deploy:
       branch: master
     on:
       php: 7.0
-      tags: true
+      tags: false
       repo: iwillhappy1314/wenprise-term-group
     slug: wenprise-term-group
     username: iwillhappy1314

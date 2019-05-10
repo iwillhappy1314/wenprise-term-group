@@ -24,7 +24,7 @@ matrix:
       env: WP_VERSION=latest
     - php: 7.0
       env: WP_VERSION=latest WP_PULUGIN_DEPLOY=1
-      dist: xenial
+      dist: precise
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
@@ -55,13 +55,6 @@ script:
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
       phpcs
     fi
-
-
-before_deploy:
-  - mkdir build
-  - cp readme.txt build
-  - cp wenprise-term-group.php build
-  - cp src build -fa
 
 deploy:
   - provider: wordpress-plugin

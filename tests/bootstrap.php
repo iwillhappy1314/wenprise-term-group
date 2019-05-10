@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file
  *
- * @package Wenprise_Pinyin_Slug
+ * @package Wenprise_Term_Group
  */
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
@@ -23,7 +23,7 @@ require_once $_tests_dir . '/includes/functions.php';
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
-	require dirname( dirname( __FILE__ ) ) . '/wenprise-pinyin-slug.php';
+	require dirname( dirname( __FILE__ ) ) . '/wenprise-term-group.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 

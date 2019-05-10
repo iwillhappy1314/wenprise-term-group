@@ -2,7 +2,7 @@
 /**
  * Class SampleTest
  *
- * @package Wenprise_Theme_Helper
+ * @package Wenprise_Term_Group
  */
 
 /**

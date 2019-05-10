@@ -24,13 +24,7 @@ matrix:
       env: WP_VERSION=latest
     - php: 7.0
       env: WP_VERSION=latest WP_PULUGIN_DEPLOY=1
-      dist: precise
-
-env:
-  global:
-    - SVN_REPO: https://plugins.svn.wordpress.org/wenprise-term-group/
-    - GH_REF: https://github.com/iwillhappy1314/wenprise-term-group.git
-    - secure: "HLmT8DlQ+aoEMpKrZQrPNVY9Ii1k1wewyP0byM/7ZB4IADSTqm9jLvIoOkKP3NjSoF+UJoKmmg3Mc0eOd2enn7N98T34LusaUVLUOPIveerhQmlltBzVIG2r/rO3FlRX9vqyEe1oPsVUVzDtOvasCOhCg27x+0SbtYp45WjMxc9d9Cka/b5dSubiprj2sLZ/6qVGqVRvXIenhasn1yl6XNM47XhDGS9IWAkjkeBReUdA9WsP0A05VX6gs94zOaMgS/sUvzLZ6Th7qi+fSOGv79tTfRIT7m/hXrup1n2d0lAqONMaLycXLZgZwOELPXehRg47tNIFivN1WAhoEBhYMyNJZtwuHq+uRUQVbVLrsBQZPe31ga/eWRWzCrQkLiH76gFOqCYhqrQ7f2Q0Y1UuUSnkxtXAEybqchv5QlfuWquZXfxVSjvu0c4I6IgOs0/jrVpWQpNH/1JAM1ulW+bZIS8rNARu+sj6ysg2QfpX0tQIY+QzzW5H/fIIdwInBLsSAv2ULnHMlIewKM4pCgbEEXKsOksVbO2hJC3eOv+1dN6pHUyEfh5pMg/mryGMv95cAy0NcockDXRVtrewyEDN86Y7qc/PSoHwas5MY6k6iwqmhgjg8nErcsgZIH3HhN6kOFV6uqLet8f3J4OKqaPDcvNEXvF7gEDVFL1NKVI4UyM="
+      dist: xenial
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
@@ -62,4 +56,23 @@ script:
       phpcs
     fi
 
-after_success: curl -L https://raw.githubusercontent.com/miya0001/travis2wpplugin/master/deploy.sh | bash
+
+before_deploy:
+  - mkdir build
+  - cp readme.txt build
+  - cp wenprise-term-group.php build
+  - cp src build -fa
+
+deploy:
+  - provider: wordpress-plugin
+    edge:
+      source: TypistTech/dpl
+      branch: master
+    on:
+      php: 7.0
+      tags: true
+      repo: iwillhappy1314/wenprise-term-group
+    slug: wenprise-term-group
+    username: iwillhappy1314
+    password: $WP_ORG_PASSWORD
+    build_dir: build

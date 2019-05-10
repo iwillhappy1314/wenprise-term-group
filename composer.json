@@ -1,0 +1,25 @@
+{
+  "name": "wenprise/term-group",
+  "description": "Set term group for WordPress tags",
+  "require": {
+    "php": ">=5.6.20",
+    "tareq1988/wordpress-settings-api-class": "^1.2"
+  },
+  "autoload": {
+    "psr-4": {
+    },
+    "files": [
+      "src/settings.php",
+      "src/metabox.php",
+      "src/term-group.php"
+    ]
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Amos Lee",
+      "email": "amos@wpcio.com"
+    }
+  ],
+  "minimum-stability": "stable"
+}

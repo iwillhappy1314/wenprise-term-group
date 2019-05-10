@@ -30,8 +30,6 @@ matrix:
       env: WP_VERSION=latest
     - php: 5.6
       env: WP_VERSION=trunk
-    - php: 5.6
-      env: WP_TRAVISCI=phpcs
       dist: precise
 
 
@@ -67,12 +65,9 @@ script:
 
 
 deploy:
-  #
-  # Auto-deploys the built plugin to WordPress.org on push to master branch
-  #
   provider: script
   skip_cleanup: true
-  script: ./bin/deploy.sh
+  script: bash bin/deploy.sh
   on:
     branch: master
     php: 7.0

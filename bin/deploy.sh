@@ -57,6 +57,10 @@ git clone -q $GH_REF ./git
 echo "基本目录 000";
 ls -la
 
+
+echo "trunk 目录 000";
+ls $BASE_DIR/trunk -la
+
 # 如果设置了构建脚本，开始构建
 cd ./git
 
@@ -70,7 +74,7 @@ cd $BASE_DIR
 echo "Syncing git repository to svn"
 rsync -a --exclude=".svn" --checksum --delete ./git/ ./trunk/
 
-rm -Rf ./git
+rm $BASE_DIR/git -Rf
 
 
 echo "trunk 目录";

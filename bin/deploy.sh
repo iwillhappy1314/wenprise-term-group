@@ -17,9 +17,7 @@ GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 #DEST_DIR=~/Plugins/$DIR_NAME
 #TRUNK="$DEST_DIR/trunk"
 
-# 检查 readme.txt 中的版本和插件主文件中的版本
-#READMEVERSION=`grep "Stable tag" $SRC_DIR/readme.txt | awk '{ print $NF}'`
-#PLUGINVERSION=`grep "Version:" $SRC_DIR/$MAINFILE | awk '{ print $NF}'`
+
 
 # pull request 时不部署
 if [[ "false" != "$TRAVIS_PULL_REQUEST" ]]; then
@@ -38,14 +36,6 @@ if [[ ! $SVN_REPO ]]; then
 	echo "SVN repo is not specified."
 	exit
 fi
-
-#####################################################
-# 比较版本，如果两个版本不一样，退出
-#####################################################
-#if [ "$READMEVERSION" != "$PLUGINVERSION" ]; then
-#    echo "Versions don't match. Exiting....";
-#    exit 1
-#fi
 
 #####################################################
 # 开始部署
@@ -84,6 +74,19 @@ rm -fr ./git
 echo "同步后的目录";
 ls -la
 
+
+#####################################################
+# 比较版本，如果两个版本不一样，退出
+#####################################################
+# 检查 readme.txt 中的版本和插件主文件中的版本
+READMEVERSION=`grep "Stable tag" $BASE_DIR/trunk/readme.txt | awk '{ print $NF}'`
+PLUGINVERSION=`grep "Version:" $BASE_DIR/trunk/$MAINFILE | awk '{ print $NF}'`
+
+#if [ "$READMEVERSION" != "$PLUGINVERSION" ]; then
+#    echo "Versions don't match. Exiting....";
+#    exit 1
+#fi
+
 #####################################################
 # 忽略文件
 #####################################################
@@ -113,15 +116,14 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 #####################################################
 # 如果设置了用户名密码，提交到仓库，必须是 Tag 才能提交
 #####################################################
-
-echo $(pwd)
-
-cd ..
-
 echo $(pwd)
 
 echo "部署目录";
 ls -la
+
+#cd $BASE_DIR
+#
+#echo $(pwd)
 
 svn copy ./trunk/ tags/$READMEVERSION/
 

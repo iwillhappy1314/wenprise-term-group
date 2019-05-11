@@ -138,7 +138,9 @@ cd $BASE_DIR
 
 echo "基本目录";
 ls -la
-svn copy ./trunk/ tags/$READMEVERSION/
+#svn copy ./trunk/ tags/$READMEVERSION/
+
+cd $BASE_DIR/trunk
 
 svn stat
 

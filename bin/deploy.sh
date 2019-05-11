@@ -52,17 +52,21 @@ fi
 #####################################################
 echo "Starting deploy..."
 
+# 创建部署所使用的目录
 mkdir build
 
 cd build
 BASE_DIR=$(pwd)
 
+# 检出 SVN
 echo "Checking out trunk from $SVN_REPO ..."
 svn co -q $SVN_REPO/trunk
 
+# 检出 Git
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
 git clone -q $GH_REF ./git
 
+# 如果设置了构建脚本，开始构建
 cd ./git
 
 if [ -e "bin/build.sh" ]; then
@@ -70,13 +74,15 @@ if [ -e "bin/build.sh" ]; then
 	bash bin/build.sh
 fi
 
-cd $BASE_DIR
-
 # 同步 git 仓库到 SVN
+cd $BASE_DIR
 echo "Syncing git repository to svn"
 rsync -a --exclude=".svn" --checksum --delete ./git/ ./trunk/
 
 rm -fr ./git
+
+echo "同步后的目录";
+ls -la
 
 #####################################################
 # 忽略文件
@@ -110,15 +116,14 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 
 echo $(pwd)
 
-cd ./trunk/..
+cd ..
 
 echo $(pwd)
 
+echo "部署目录";
 ls -la
 
 svn copy ./trunk/ tags/$READMEVERSION/
-
-
 
 svn stat
 

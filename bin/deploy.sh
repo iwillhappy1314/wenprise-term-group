@@ -70,7 +70,7 @@ cd $BASE_DIR
 echo "Syncing git repository to svn"
 rsync -a --exclude=".svn" --checksum --delete ./git/ ./svn/trunk/
 
-rm $BASE_DIR/.git -Rf
+rm $BASE_DIR/svn/trunk/.git -Rf
 
 #####################################################
 # 比较版本，如果两个版本不一样，退出

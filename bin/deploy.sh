@@ -17,17 +17,9 @@ GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 #DEST_DIR=~/Plugins/$DIR_NAME
 #TRUNK="$DEST_DIR/trunk"
 
-# 设置 WordPress 用户名
-
-
 # 检查 readme.txt 中的版本和插件主文件中的版本
 #READMEVERSION=`grep "Stable tag" $SRC_DIR/readme.txt | awk '{ print $NF}'`
 #PLUGINVERSION=`grep "Version:" $SRC_DIR/$MAINFILE | awk '{ print $NF}'`
-
-
-
-# Git 仓库地址 TRAVIS_REPO_SLUG = owner_name/repo_name
-
 
 # pull request 时不部署
 if [[ "false" != "$TRAVIS_PULL_REQUEST" ]]; then

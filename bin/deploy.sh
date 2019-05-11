@@ -50,7 +50,7 @@ BASE_DIR=$(pwd)
 
 # 检出 SVN
 echo "Checking out trunk from $SVN_REPO ..."
-svn co -q $SVN_REPO/trunk
+svn co -q $SVN_REPO
 
 # 检出 Git
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
@@ -69,7 +69,7 @@ cd $BASE_DIR
 echo "Syncing git repository to svn"
 rsync -a --exclude=".svn" --checksum --delete ./git/ ./trunk/
 
-rm -fr ./git
+rm -Rf ./git
 
 echo "同步后的目录";
 ls -la
@@ -125,7 +125,8 @@ ls -la
 #
 #echo $(pwd)
 
-svn copy ./trunk/ tags/$READMEVERSION/
+cd $BASE_DIR
+svn copy ./trunk/ tags/$READMEVERSION/ -fa
 
 svn stat
 

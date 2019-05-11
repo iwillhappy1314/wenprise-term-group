@@ -17,8 +17,6 @@ GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 #DEST_DIR=~/Plugins/$DIR_NAME
 #TRUNK="$DEST_DIR/trunk"
 
-
-
 # pull request 时不部署
 if [[ "false" != "$TRAVIS_PULL_REQUEST" ]]; then
 	echo "Not deploying pull requests."
@@ -50,9 +48,9 @@ BASE_DIR=$(pwd)
 
 # 检出 SVN
 echo "Checking out trunk from $SVN_REPO ..."
-svn co -q $SVN_REPO
+svn co -q $SVN_REPO/trunk
 
-# 检出 Git
+# 检出 Git，已经有了，是不是不需要再来一遍了，或者直接 checkout?
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
 git clone -q $GH_REF ./git
 
@@ -73,6 +71,10 @@ echo "Syncing git repository to svn"
 rsync -a --exclude=".svn" --checksum --delete ./git/ ./trunk/
 
 rm -Rf ./git
+
+
+echo "trunk 目录";
+ls $BASE_DIR/trunk -la
 
 echo "同步后的目录";
 ls -la
@@ -132,7 +134,7 @@ cd $BASE_DIR
 
 echo "基本目录";
 ls -la
-svn copy ./trunk/ tags/$READMEVERSION/ -fa
+svn copy ./trunk/ tags/$READMEVERSION/
 
 svn stat
 

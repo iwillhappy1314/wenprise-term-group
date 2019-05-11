@@ -56,6 +56,9 @@ svn co -q $SVN_REPO
 echo "Getting clone from $GH_REF to $SVN_REPO ..."
 git clone -q $GH_REF ./git
 
+echo "基本目录 000";
+ls -la
+
 # 如果设置了构建脚本，开始构建
 cd ./git
 
@@ -126,6 +129,9 @@ ls -la
 #echo $(pwd)
 
 cd $BASE_DIR
+
+echo "基本目录";
+ls -la
 svn copy ./trunk/ tags/$READMEVERSION/ -fa
 
 svn stat

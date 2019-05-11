@@ -107,9 +107,19 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 #####################################################
 # 如果设置了用户名密码，提交到仓库，必须是 Tag 才能提交
 #####################################################
+
 echo $(pwd)
 
-svn copy trunk/ tags/$READMEVERSION/
+cd ./trunk/..
+
+echo $(pwd)
+
+ls -la
+
+svn copy ./trunk/ tags/$READMEVERSION/
+
+
+
 svn stat
 
 svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD svn -m "Deploy version $READMEVERSION"

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # args
-MSG=${1-'deploy from git'}
 MAINFILE="wenprise-term-group.php"
 WP_ORG_USERNAME="iwillhappy1314"
 
@@ -11,11 +10,10 @@ WP_ORG_USERNAME="iwillhappy1314"
 SVN_REPO="https://plugins.svn.wordpress.org/wenprise-term-group/"
 GH_REF=https://github.com/${TRAVIS_REPO_SLUG}.git
 
-# paths
-#SRC_DIR=$(git rev-parse --show-toplevel)
-#DIR_NAME=$(basename $SRC_DIR)
-#DEST_DIR=~/Plugins/$DIR_NAME
-#TRUNK="$DEST_DIR/trunk"
+
+#####################################################
+# 部署检查
+#####################################################
 
 # pull request 时不部署
 if [[ "false" != "$TRAVIS_PULL_REQUEST" ]]; then
@@ -96,7 +94,7 @@ fi
 # 删除忽略的文件
 for file in $(cat ".svnignore" 2>/dev/null)
 do
-    rm -rf $file
+    rm $file -Rf
 done
 
 

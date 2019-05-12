@@ -143,6 +143,10 @@ cd $BUILT_DIR/svn
 
 TAG=$(svn ls "$SVN_REPO/tags/$READMEVERSION")
 error=$?
+
+echo $TAG
+echo $error
+
 if [ $error != 0 ]; then
     svn copy $BUILT_DIR/svn/trunk/ $BUILT_DIR/svn/tags/$READMEVERSION/
     exit 1

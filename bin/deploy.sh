@@ -130,11 +130,12 @@ if [[ $TRAVIS_TAG ]]; then
     #####################################################
     # 复制文件到 tag，如果 Tag 不存在，跳过
     #####################################################
-    echo "打标签";
-    svn copy $BUILT_DIR/svn/trunk/ $BUILT_DIR/svn/tags/$READMEVERSION/
 
     # 发布到 wordpress.org
 	svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version $READMEVERSION"
+
+	echo "打标签";
+    svn copy $SVN_REPO/trunk $SVN_REPO/tags/$READMEVERSION
 
 	echo "发布新版本完成";
 

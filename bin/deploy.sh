@@ -37,7 +37,7 @@ if [[ ! $SVN_REPO ]]; then
 fi
 
 #####################################################
-# 开始部署
+# 拉取代码，开始构建
 #####################################################
 echo "Starting deploy..."
 
@@ -163,8 +163,6 @@ cd $BUILT_DIR/svn
 svn stat
 
 if [[ $TRAVIS_TAG ]]; then
-	echo "设置了标签、发布新版本到 WordPress.org";
-
 	svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version $READMEVERSION"
 
 	echo "发布新版本完成";

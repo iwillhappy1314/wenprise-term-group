@@ -8,10 +8,6 @@ notifications:
     on_success: never
     on_failure: change
 
-#if:
-#  tag IS present
-#
-
 branches:
   only:
     - master

@@ -167,5 +167,5 @@ if [[ $TRAVIS_TAG ]]; then
 	echo "开始部署";
 fi
 
-echo "开始部署";
+echo "部署完成";
 #svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version $READMEVERSION"

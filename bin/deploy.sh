@@ -101,8 +101,14 @@ fi
 # 同步 git 仓库到 SVN
 cd $BUILT_DIR
 echo "Syncing git repository to svn"
-rsync -a --exclude=".svn" --checksum --delete ./git/ ./svn/trunk/
 
+if [[ $TRAVIS_TAG ]]; then
+    rsync -a --exclude=".svn" --checksum --delete ./git/ ./svn/trunk/
+else
+    cp ./git/readme.txt ./svn/trunk/ -f
+fi
+
+# 移除 .git 目录
 rm $BUILT_DIR/svn/trunk/.git -Rf
 
 
@@ -136,44 +142,34 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 #####################################################
 # 复制文件到 tag，如果 Tag 不存在，跳过
 #####################################################
-
 if [[ $TRAVIS_TAG ]]; then
-	echo "开始部署111";
-fi
+	echo "开始打标签";
 
+    cd $BUILT_DIR/svn
 
-echo "svn 目录";
-ls $BUILT_DIR/svn -la
+    TAG=$(svn ls "$SVN_REPO/tags/$READMEVERSION")
+    error=$?
 
-cd $BUILT_DIR/svn
-
-TAG=$(svn ls "$SVN_REPO/tags/$READMEVERSION")
-error=$?
-
-echo $TAG
-echo $error
-
-if [ $error != 0 ]; then
-    svn copy $BUILT_DIR/svn/trunk/ $BUILT_DIR/svn/tags/$READMEVERSION/
+    if [ $error != 0 ]; then
+        svn copy $BUILT_DIR/svn/trunk/ $BUILT_DIR/svn/tags/$READMEVERSION/
+    fi
 fi
 
 
 #####################################################
 # 如果设置了用户名密码，提交到仓库，必须是 Tag 才能提交
 #####################################################
-echo "svn 目录";
-ls $BUILT_DIR/svn -la
-
-echo "svn trunk 目录";
-ls $BUILT_DIR/svn/trunk -la
-
 cd $BUILT_DIR/svn
 svn stat
 
-#  commit to trunk.
 if [[ $TRAVIS_TAG ]]; then
-	echo "开始部署";
-fi
+	echo "设置了标签、发布新版本到 WordPress.org";
 
-echo "部署完成";
-#svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version $READMEVERSION"
+	svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version $READMEVERSION"
+
+	echo "发布新版本完成";
+else
+	svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "update readme.txt"
+
+	echo "更新 readme.txt 完成";
+fi

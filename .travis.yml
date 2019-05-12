@@ -11,9 +11,11 @@ notifications:
 #if:
 #  tag IS present
 #
-#branches:
-#  only:
-#    - master
+
+branches:
+  only:
+    - master
+    - /^[0-9]+.*$/
 
 cache:
   directories:
@@ -57,3 +59,5 @@ script:
 
 after_success:
   - bash bin/deploy.sh
+  on:
+    tags: true

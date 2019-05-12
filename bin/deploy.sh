@@ -136,6 +136,12 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 #####################################################
 # 复制文件到 tag，如果 Tag 不存在，跳过
 #####################################################
+
+if [[ $TRAVIS_TAG ]]; then
+	echo "开始部署111";
+fi
+
+
 echo "svn 目录";
 ls $BUILT_DIR/svn -la
 
@@ -163,7 +169,6 @@ ls $BUILT_DIR/svn/trunk -la
 
 cd $BUILT_DIR/svn
 svn stat
-
 
 #  commit to trunk.
 if [[ $TRAVIS_TAG ]]; then

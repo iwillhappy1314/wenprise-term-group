@@ -1,3 +1,4 @@
+.svnignore
 .phpcs.xml.dist
 .travis.yml
 phpunit.xml.dist

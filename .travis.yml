@@ -8,8 +8,8 @@ notifications:
     on_success: never
     on_failure: change
 
-if:
-  tag IS present
+#if:
+#  tag IS present
 #
 #branches:
 #  only:
@@ -57,3 +57,5 @@ script:
 
 after_success:
   - bash bin/deploy.sh
+  on:
+    tags: true

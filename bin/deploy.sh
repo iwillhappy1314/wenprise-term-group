@@ -13,6 +13,11 @@ GIT_REPO=https://github.com/${TRAVIS_REPO_SLUG}.git
 # 部署检查
 #####################################################
 
+# 如果不是标签、退出处理
+if [[ !$TRAVIS_TAG ]]; then
+    exit
+fi
+
 # pull request 时不部署
 if [[ "false" != "$TRAVIS_PULL_REQUEST" ]]; then
 	echo "Not deploying pull requests."
@@ -155,4 +160,5 @@ ls $BUILT_DIR/svn/trunk -la
 
 cd $BUILT_DIR/svn
 svn stat
+
 svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version $READMEVERSION"

@@ -59,16 +59,6 @@ if [ -e "bin/build.sh" ]; then
 fi
 
 #####################################################
-# 同步文件
-#####################################################
-# 同步 git 仓库到 SVN
-cd $BUILT_DIR
-echo "Syncing git repository to svn"
-rsync -a --exclude=".svn" --checksum --delete ./git/ ./svn/trunk/
-
-rm $BUILT_DIR/svn/trunk/.git -Rf
-
-#####################################################
 # 比较版本，如果两个版本不一样，退出
 #####################################################
 READMEVERSION=`grep "Stable tag" $BUILT_DIR/svn/trunk/readme.txt | awk '{ print $NF}'`
@@ -78,6 +68,40 @@ if [ "$READMEVERSION" != "$PLUGINVERSION" ]; then
     echo "Versions don't match. Exiting....";
     exit 1
 fi
+
+
+#####################################################
+# 设置 Git tag
+#####################################################
+if git show-ref --tags --quiet --verify -- "refs/tags/$READMEVERSION"
+	then
+		echo "Version $READMEVERSION already exists as git tag. Exiting....";
+		exit 1;
+	else
+		echo "Git version does not exist. Let's proceed..."
+
+		echo -e "Enter a commit message for this new version: \c"
+        git commit -am "Deploy version $READMEVERSION"
+
+        echo "Tagging new version in git"
+        git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
+
+        echo "Pushing latest commit to origin, with tags"
+        git push origin master
+        git push origin master --tags
+fi
+
+
+#####################################################
+# 同步文件
+#####################################################
+# 同步 git 仓库到 SVN
+cd $BUILT_DIR
+echo "Syncing git repository to svn"
+rsync -a --exclude=".svn" --checksum --delete ./git/ ./svn/trunk/
+
+rm $BUILT_DIR/svn/trunk/.git -Rf
+
 
 #####################################################
 # 设置忽略文件、删除忽略的文件
@@ -107,6 +131,17 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 
 
 #####################################################
+# 复制文件到 tag，如果 Tag 不存在，跳过
+#####################################################
+TAG=$(svn ls "SVN_REPO/tags/$READMEVERSION")
+error=$?
+if [ $error != 0 ]; then
+    svn copy $BUILT_DIR/svn/trunk/ $BUILT_DIR/svn/tags/$READMEVERSION/
+    exit 1
+fi
+
+
+#####################################################
 # 如果设置了用户名密码，提交到仓库，必须是 Tag 才能提交
 #####################################################
 echo "svn 目录";
@@ -114,14 +149,6 @@ ls $BUILT_DIR/svn -la
 
 echo "svn trunk 目录";
 ls $BUILT_DIR/svn/trunk -la
-
-# 复制文件到 tag，如果 Tag 不存在，跳过
-TAG=$(svn ls "SVN_REPO/tags/$READMEVERSION")
-error=$?
-if [ $error != 0 ]; then
-    svn copy $BUILT_DIR/svn/trunk/ $BUILT_DIR/svn/tags/$READMEVERSION/
-    exit 1
-fi
 
 cd $BUILT_DIR/svn
 svn stat

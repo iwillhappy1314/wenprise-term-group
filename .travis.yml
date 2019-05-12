@@ -21,7 +21,7 @@ env:
   matrix:
     - WP_VERSION=latest WP_MULTISITE=0
   global:
-    - PLUGIN_SLUG=wenprise-pinyin-slug
+    - PLUGIN_SLUG=wenprise-term-group
     - SVN_REPO=https://plugins.svn.wordpress.org/$PLUGIN_SLUG/
     - GIT_REPO=https://github.com/iwillhappy1314/$PLUGIN_SLUG.git
     - MAINFILE="$PLUGIN_SLUG.php"

@@ -9,7 +9,7 @@ Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-当网站有同义词标签时，此插件可以让同义词标签存档页面 301 跳转到主标签。
+当网站有同义词标签时，此插件可以让同义词标签页面 301 跳转到主标签页面。
 
 ## Description ##
 

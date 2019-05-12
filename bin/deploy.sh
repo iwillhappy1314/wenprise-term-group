@@ -109,7 +109,7 @@ cd $BUILT_DIR/svn/trunk
 # 设置 svn 忽略
 if [ -e ".svnignore" ]; then
     echo "svn propset form .svnignore"
-    svn propset -q -R svn:ignore -F .svnignore
+    svn propset -q -R svn:ignore -F .svnignore .
 fi
 
 # 删除忽略的文件
@@ -131,9 +131,12 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 #####################################################
 # 复制文件到 tag，如果 Tag 不存在，跳过
 #####################################################
+echo "svn 目录";
+ls $BUILT_DIR/svn -la
+
 cd $BUILT_DIR/svn
 
-TAG=$(svn ls "SVN_REPO/tags/$READMEVERSION")
+TAG=$(svn ls "$SVN_REPO/tags/$READMEVERSION")
 error=$?
 if [ $error != 0 ]; then
     svn copy $BUILT_DIR/svn/trunk/ $BUILT_DIR/svn/tags/$READMEVERSION/

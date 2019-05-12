@@ -23,7 +23,7 @@ matrix:
   include:
     - php: 7.0
       env: WP_VERSION=latest WP_PULUGIN_DEPLOY=1
-      dist: xenial
+      dist: precise
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
@@ -57,5 +57,3 @@ script:
 
 after_success:
   - bash bin/deploy.sh
-  on:
-    tags: true

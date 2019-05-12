@@ -14,9 +14,9 @@ GIT_REPO=https://github.com/${TRAVIS_REPO_SLUG}.git
 #####################################################
 
 # 如果不是标签、退出处理
-if [[ !$TRAVIS_TAG ]]; then
-    exit
-fi
+#if [[ !$TRAVIS_TAG ]]; then
+#    exit
+#fi
 
 # pull request 时不部署
 if [[ "false" != "$TRAVIS_PULL_REQUEST" ]]; then

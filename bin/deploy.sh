@@ -121,8 +121,6 @@ if [[ $TRAVIS_TAG ]]; then
     #####################################################
     # 比较版本，如果两个版本不一样，退出
     #####################################################
-    echo $READMEVERSION;
-    echo $PLUGINVERSION;
 
     if [ "$READMEVERSION" != "$PLUGINVERSION" ]; then
         echo "Versions don't match. Exiting....";
@@ -132,14 +130,8 @@ if [[ $TRAVIS_TAG ]]; then
     #####################################################
     # 复制文件到 tag，如果 Tag 不存在，跳过
     #####################################################
-    echo "开始打标签";
-
-    TAG=$(svn ls "$SVN_REPO/tags/$READMEVERSION")
-    error=$?
-
-    if [ $error != 0 ]; then
-        svn copy $BUILT_DIR/svn/trunk/ $BUILT_DIR/svn/tags/$READMEVERSION/
-    fi
+    echo "打标签";
+    svn copy $BUILT_DIR/svn/trunk/ $BUILT_DIR/svn/tags/$READMEVERSION/
 
     # 发布到 wordpress.org
 	svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version $READMEVERSION"

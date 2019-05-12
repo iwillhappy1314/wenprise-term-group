@@ -149,7 +149,6 @@ echo $error
 
 if [ $error != 0 ]; then
     svn copy $BUILT_DIR/svn/trunk/ $BUILT_DIR/svn/tags/$READMEVERSION/
-    exit 1
 fi
 
 

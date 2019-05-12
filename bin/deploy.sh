@@ -69,6 +69,9 @@ fi
 READMEVERSION=`grep "Stable tag" $BUILT_DIR/svn/trunk/readme.txt | awk '{ print $NF}'`
 PLUGINVERSION=`grep "Version:" $BUILT_DIR/svn/trunk/$MAINFILE | awk '{ print $NF}'`
 
+echo $READMEVERSION;
+echo $PLUGINVERSION;
+
 if [ "$READMEVERSION" != "$PLUGINVERSION" ]; then
     echo "Versions don't match. Exiting....";
     exit 1

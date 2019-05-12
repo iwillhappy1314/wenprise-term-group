@@ -21,7 +21,7 @@ matrix:
   include:
     - php: 7.0
       env: WP_VERSION=latest WP_PULUGIN_DEPLOY=1
-      dist: precise
+      dist: xenial
 
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"

@@ -66,26 +66,6 @@ PLUGINVERSION=`grep "Version:" $BUILT_DIR/git/$MAINFILE | awk '{ print $NF}'`
 
 
 #####################################################
-# 设置 Git tag
-#####################################################
-#if git show-ref --tags --quiet --verify -- "refs/tags/$READMEVERSION"
-#	then
-#		echo "Version $READMEVERSION already exists as git tag. Exiting....";
-#		exit 1;
-#	else
-#		echo "Git version does not exist. Let's proceed..."
-#        git commit -am "Deploy version $READMEVERSION"
-#
-#        echo "Tagging new version in git"
-#        git tag -a "$READMEVERSION" -m "Tagging version $READMEVERSION"
-#
-#        echo "Pushing latest commit to origin, with tags"
-#        git push origin master
-#        git push origin master --tags
-#fi
-
-
-#####################################################
 # 同步文件
 #####################################################
 # 同步 git 仓库到 SVN
@@ -169,5 +149,5 @@ if [[ $TRAVIS_TAG ]]; then
 else
 	svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "update readme.txt"
 
-	echo "更新 readme.txt 完成";
+	echo "更新 assets 和 readme.txt 完成";
 fi

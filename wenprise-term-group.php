@@ -3,7 +3,7 @@
 Plugin Name:        Wenprise Term Group
 Plugin URI:         https://www.wpzhiku.com/wenprise-term-group/
 Description:        当网站有同义词标签时，此插件可以让同义词标签存档页面 301 跳转到主标签。
-Version:            1.0.1
+Version:            1.0.3
 Author:             WordPress 智库
 Author URI:         https://www.wpzhiku.com/
 License:            MIT License

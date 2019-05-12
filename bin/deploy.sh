@@ -42,11 +42,11 @@ cd build
 BUILT_DIR=$(pwd)
 
 # 检出 SVN
-echo "Checking out trunk from $SVN_REPO ..."
+echo "Checking out from $SVN_REPO ..."
 svn co -q $SVN_REPO ./svn
 
 # 检出 Git，已经有了，是不是不需要再来一遍了，或者直接 checkout?
-echo "Getting clone from $GIT_REPO to $SVN_REPO ..."
+echo "Clone from $GIT_REPO ..."
 git clone -q $GIT_REPO ./git
 
 # 如果设置了构建脚本，开始构建
@@ -90,7 +90,7 @@ PLUGINVERSION=`grep "Version:" $BUILT_DIR/git/$MAINFILE | awk '{ print $NF}'`
 #####################################################
 # 同步 git 仓库到 SVN
 cd $BUILT_DIR
-echo "Syncing git repository to svn"
+echo "同步 Git 仓库到 SVN"
 
 if [[ $TRAVIS_TAG ]]; then
     rsync -a --exclude=".svn" --checksum --delete ./git/ ./svn/trunk/
@@ -99,7 +99,7 @@ else
     cp ./git/assets/ ./svn/assets/ -Rf
 fi
 
-# 移除 .git 目录
+# 同步完成后、移除 svn trunk 中的 .git 目录
 rm $BUILT_DIR/svn/trunk/.git -Rf
 
 

@@ -13,11 +13,6 @@ GIT_REPO=https://github.com/${TRAVIS_REPO_SLUG}.git
 # 部署检查
 #####################################################
 
-# 如果不是标签、退出处理
-#if [[ !$TRAVIS_TAG ]]; then
-#    exit
-#fi
-
 # pull request 时不部署
 if [[ "false" != "$TRAVIS_PULL_REQUEST" ]]; then
 	echo "Not deploying pull requests."
@@ -63,19 +58,12 @@ if [ -e "bin/build.sh" ]; then
 	bash bin/build.sh
 fi
 
-#####################################################
-# 比较版本，如果两个版本不一样，退出
-#####################################################
-READMEVERSION=`grep "Stable tag" $BUILT_DIR/svn/trunk/readme.txt | awk '{ print $NF}'`
-PLUGINVERSION=`grep "Version:" $BUILT_DIR/svn/trunk/$MAINFILE | awk '{ print $NF}'`
 
-echo $READMEVERSION;
-echo $PLUGINVERSION;
-
-if [ "$READMEVERSION" != "$PLUGINVERSION" ]; then
-    echo "Versions don't match. Exiting....";
-    exit 1
-fi
+#####################################################
+# 获取 Git 中的插件版本
+#####################################################
+READMEVERSION=`grep "Stable tag" $BUILT_DIR/git/trunk/readme.txt | awk '{ print $NF}'`
+PLUGINVERSION=`grep "Version:" $BUILT_DIR/git/trunk/$MAINFILE | awk '{ print $NF}'`
 
 
 #####################################################
@@ -143,12 +131,28 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 
 
 #####################################################
-# 复制文件到 tag，如果 Tag 不存在，跳过
+# 如果设置了用户名密码，提交到仓库，必须是 Tag 才能提交
 #####################################################
-if [[ $TRAVIS_TAG ]]; then
-	echo "开始打标签";
+cd $BUILT_DIR/svn
+svn stat
 
-    cd $BUILT_DIR/svn
+if [[ $TRAVIS_TAG ]]; then
+
+    #####################################################
+    # 比较版本，如果两个版本不一样，退出
+    #####################################################
+    echo $READMEVERSION;
+    echo $PLUGINVERSION;
+
+    if [ "$READMEVERSION" != "$PLUGINVERSION" ]; then
+        echo "Versions don't match. Exiting....";
+        exit 1
+    fi
+
+    #####################################################
+    # 复制文件到 tag，如果 Tag 不存在，跳过
+    #####################################################
+    echo "开始打标签";
 
     TAG=$(svn ls "$SVN_REPO/tags/$READMEVERSION")
     error=$?
@@ -156,16 +160,8 @@ if [[ $TRAVIS_TAG ]]; then
     if [ $error != 0 ]; then
         svn copy $BUILT_DIR/svn/trunk/ $BUILT_DIR/svn/tags/$READMEVERSION/
     fi
-fi
 
-
-#####################################################
-# 如果设置了用户名密码，提交到仓库，必须是 Tag 才能提交
-#####################################################
-cd $BUILT_DIR/svn
-svn stat
-
-if [[ $TRAVIS_TAG ]]; then
+    # 发布到 wordpress.org
 	svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version $READMEVERSION"
 
 	echo "发布新版本完成";

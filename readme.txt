@@ -40,7 +40,7 @@ WordPress 中的标签可以写得比较随意，经常会出现同义词的情�
 
 ## Installation ##
 
-1. 上传插件到`/wp-content/plugins/` 目录，或在 WordPress 安装插件界面搜索 "Wenprise Pinyin Slug"，点击安装。
+1. 上传插件到`/wp-content/plugins/` 目录，或在 WordPress 安装插件界面搜索 "Wenprise Term Group"，点击安装。
 2. 在插件管理菜单激活插件
 
 ## Frequently Asked Questions ##

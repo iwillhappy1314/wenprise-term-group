@@ -73,23 +73,21 @@ fi
 #####################################################
 # 设置 Git tag
 #####################################################
-if git show-ref --tags --quiet --verify -- "refs/tags/$READMEVERSION"
-	then
-		echo "Version $READMEVERSION already exists as git tag. Exiting....";
-		exit 1;
-	else
-		echo "Git version does not exist. Let's proceed..."
-
-		echo -e "Enter a commit message for this new version: \c"
-        git commit -am "Deploy version $READMEVERSION"
-
-        echo "Tagging new version in git"
-        git tag -a "$NEWVERSION1" -m "Tagging version $NEWVERSION1"
-
-        echo "Pushing latest commit to origin, with tags"
-        git push origin master
-        git push origin master --tags
-fi
+#if git show-ref --tags --quiet --verify -- "refs/tags/$READMEVERSION"
+#	then
+#		echo "Version $READMEVERSION already exists as git tag. Exiting....";
+#		exit 1;
+#	else
+#		echo "Git version does not exist. Let's proceed..."
+#        git commit -am "Deploy version $READMEVERSION"
+#
+#        echo "Tagging new version in git"
+#        git tag -a "$READMEVERSION" -m "Tagging version $READMEVERSION"
+#
+#        echo "Pushing latest commit to origin, with tags"
+#        git push origin master
+#        git push origin master --tags
+#fi
 
 
 #####################################################
@@ -133,6 +131,8 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 #####################################################
 # 复制文件到 tag，如果 Tag 不存在，跳过
 #####################################################
+cd $BUILT_DIR/svn
+
 TAG=$(svn ls "SVN_REPO/tags/$READMEVERSION")
 error=$?
 if [ $error != 0 ]; then

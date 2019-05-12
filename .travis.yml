@@ -59,5 +59,3 @@ script:
 
 after_success:
   - bash bin/deploy.sh
-  on:
-    tags: true

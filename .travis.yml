@@ -17,6 +17,17 @@ cache:
   directories:
     - $HOME/.composer/cache
 
+env:
+  matrix:
+    - WP_VERSION=latest WP_MULTISITE=0
+  global:
+    - PLUGIN_SLUG=wenprise-pinyin-slug
+    - SVN_REPO=https://plugins.svn.wordpress.org/$PLUGIN_SLUG/
+    - GIT_REPO=https://github.com/iwillhappy1314/$PLUGIN_SLUG.git
+    - MAINFILE="$PLUGIN_SLUG.php"
+    - secure: "avDNDC1NSMQIyuucJPes6FQsDHisY9oL2E6tNZsTYuYAL9DWRqL04IH7BMssYiXxqy6Qw8iFnDV3SQN3Q6ynnu7zShl3daQA95kFn5W65fmMUG4jzNsFJGisK/ONT6PjENi/y296Irt/1K6Tbdwj+EAHPYCjoQvNnMY4hLhHskJhUoFZDQyrwAiN+1oaFOIh9/x8mKUvckliBuVWVM+AEH7cklv18gK01ky8MMHbQbhZm8qOMe/uh1AQwOnuOYz6rBzg4i1voJtYXD1k+ydR4ObfqbIHCi3/k+d1yWgQUA8qVuKV7bUWU8k+mvzvL2MiwAQelsNKU0UGvvWhAgL3RKSPpZc45dAIpu5Hyeo7iEEVPfecBO5+DvY86t5jwIdKID8K984Mrs5//nYgAQzLtzAOgXc2//0YRVs2rTXrTZE3OJodskslNXDBAFaCnMtIwCJxxwR+6MygwQNtksB16WbRa2SSvXKicdG2BLlr7fzJCtjEr1g02KykuJR1F5dkNdpD28aVNvtH2qZsNeCMz48tT8L8HmaHNOLi3+1ico5abo3Tij7xtMAOpbAJalRCg1geMvVkgA3SinZMJYNK3Vipr3E11pFnwBbm/RqDciTQEoUUxo2EXk4+FV0yq3ip1cpMkXcHd6F9t8GQZwZY2/Jbbdx4Yu6EeEVnGExOIwY="
+
+
 matrix:
   include:
     - php: 7.0

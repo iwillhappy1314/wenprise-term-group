@@ -90,8 +90,14 @@ cd $BASE_DIR/svn/trunk
 
 if [ -e ".svnignore" ]; then
     echo "svn propset form .svnignore"
-    svn propset -q -R svn:ignore -F .svnignore .
+    svn propset -q -R svn:ignore -F .svnignore
 fi
+
+# 删除忽略的文件
+for file in $(cat ".svnignore" 2>/dev/null)
+do
+    rm -rf $file
+done
 
 
 #####################################################

@@ -116,6 +116,7 @@ svn st | grep '^?' | sed -e 's/\?[ ]*/svn add -q /g' | sh
 cd $BUILT_DIR/svn
 svn stat
 
+# todo: 标签应该用 Git 标签还是插件版本号？
 if [[ $TRAVIS_TAG ]]; then
 
     #####################################################
@@ -127,15 +128,11 @@ if [[ $TRAVIS_TAG ]]; then
         exit 1
     fi
 
-    #####################################################
-    # 复制文件到 tag，如果 Tag 不存在，跳过
-    #####################################################
-
     # 发布到 wordpress.org
 	svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version $READMEVERSION"
 
-	echo "打标签";
-    svn copy $SVN_REPO/trunk $SVN_REPO/tags/$READMEVERSION
+	# 打标签
+    svn copy $SVN_REPO/trunk $SVN_REPO/tags/$READMEVERSION -m "Add tag $READMEVERSION"
 
 	echo "发布新版本完成";
 

@@ -132,7 +132,7 @@ if [[ $TRAVIS_TAG ]]; then
 	svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version $READMEVERSION"
 
 	# 打标签
-    svn copy $SVN_REPO/trunk $SVN_REPO/tags/$READMEVERSION -m "Add tag $READMEVERSION"
+    svn copy --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD $SVN_REPO/trunk $SVN_REPO/tags/$READMEVERSION -m "Add tag $READMEVERSION"
 
 	echo "发布新版本完成";
 

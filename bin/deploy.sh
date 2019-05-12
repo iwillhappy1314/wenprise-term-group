@@ -34,7 +34,6 @@ fi
 #####################################################
 # 拉取代码，开始构建
 #####################################################
-echo "Starting deploy..."
 
 # 创建部署所使用的目录
 mkdir build
@@ -62,8 +61,8 @@ fi
 #####################################################
 # 获取 Git 中的插件版本
 #####################################################
-READMEVERSION=`grep "Stable tag" $BUILT_DIR/git/trunk/readme.txt | awk '{ print $NF}'`
-PLUGINVERSION=`grep "Version:" $BUILT_DIR/git/trunk/$MAINFILE | awk '{ print $NF}'`
+READMEVERSION=`grep "Stable tag" $BUILT_DIR/git/readme.txt | awk '{ print $NF}'`
+PLUGINVERSION=`grep "Version:" $BUILT_DIR/git/$MAINFILE | awk '{ print $NF}'`
 
 
 #####################################################
@@ -97,6 +96,7 @@ if [[ $TRAVIS_TAG ]]; then
     rsync -a --exclude=".svn" --checksum --delete ./git/ ./svn/trunk/
 else
     cp ./git/readme.txt ./svn/trunk/ -f
+    cp ./git/assets/ ./svn/assets/ -Rf
 fi
 
 # 移除 .git 目录
@@ -165,6 +165,7 @@ if [[ $TRAVIS_TAG ]]; then
 	svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "Deploy version $READMEVERSION"
 
 	echo "发布新版本完成";
+
 else
 	svn ci --no-auth-cache --username $WP_ORG_USERNAME --password $WP_ORG_PASSWORD -m "update readme.txt"
 

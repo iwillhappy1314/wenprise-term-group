@@ -160,7 +160,7 @@ function wprs_tg_save_taxonomy_meta($term_id)
  * @param int  $term_id
  * @param bool $is_primary 为 true 时，添加主标签、否则删除
  */
-function wprs_tg_set_primary_term(int $term_id, bool $is_primary = true)
+function wprs_tg_set_primary_term(int $term_id, $is_primary = true)
 {
 
     $primary_terms = get_option('wprs_primary_term', []);

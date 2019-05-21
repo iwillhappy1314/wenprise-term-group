@@ -5,7 +5,7 @@ Tags: SEO, term_group, term_alias, tag, 301
 Requires at least: 3.4
 Requires PHP: 5.6.0
 Tested up to: 5.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,9 @@ WordPress 中的标签可以写得比较随意，经常会出现同义词的情�
 ## Screenshots ##
 
 ## Changelog ##
+
+= 1.0.3 =
+* bugfix
 
 = 1.0 =
 * 初次发布、支持设置主标签、为同义词标签选择主标签、支持同义词标签自动跳转到主标签

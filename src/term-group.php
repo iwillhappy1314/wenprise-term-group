@@ -72,7 +72,7 @@ function wprs_tg_template_redirect()
 {
     $term = get_queried_object();
 
-    if ($term->taxonomy == 'post_tag') {
+    if (isset($term->taxonomy) && $term->taxonomy == 'post_tag') {
 
         // $term_group  = $term->term_group;
         $is_primary     = boolval(get_term_meta($term->term_id, '_wprs_is_primary', true));

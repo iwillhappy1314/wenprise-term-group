@@ -21,5 +21,10 @@
       "email": "amos@wpcio.com"
     }
   ],
-  "minimum-stability": "stable"
+  "minimum-stability": "stable",
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    }
+  }
 }

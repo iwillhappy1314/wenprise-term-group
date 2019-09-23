@@ -25,6 +25,7 @@ if (version_compare(phpversion(), '5.6.20', '<')) {
     return;
 }
 
+// 插件设置
 // add_filter('plugin_action_links_' . plugin_basename(__FILE__), function ($links)
 // {
 //     $url = admin_url('options-general.php?page=wenprise_term_group');

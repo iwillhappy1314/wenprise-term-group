@@ -62,14 +62,12 @@ if ( ! class_exists('Wenprise_Term_Group_Settings')):
 
         function get_settings_sections()
         {
-            $sections = [
+            return [
                 [
                     'id'    => 'wprs_term_group',
                     'title' => __('标签分组设置', 'wprs'),
                 ],
             ];
-
-            return $sections;
         }
 
 
@@ -80,7 +78,7 @@ if ( ! class_exists('Wenprise_Term_Group_Settings')):
          */
         function get_settings_fields()
         {
-            $settings_fields = [
+            return [
                 'wprs_term_group' => [
 
                     [
@@ -105,8 +103,6 @@ if ( ! class_exists('Wenprise_Term_Group_Settings')):
 
                 ],
             ];
-
-            return $settings_fields;
         }
 
 

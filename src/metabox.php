@@ -90,7 +90,7 @@ function wprs_tg_taxonomy_edit_meta_field($term)
  */
 function wprs_tg_save_taxonomy_meta($term_id)
 {
-    $term_id        = intval($term_id);
+    $term_id        = (int)$term_id;
     $is_primary     = isset($_POST[ '_wprs_is_primary' ]) ? boolval($_POST[ '_wprs_is_primary' ]) : false;
     $parent_term_id = isset($_POST[ '_wprs_parent_term' ]) ? intval($_POST[ '_wprs_parent_term' ]) : false;
 
@@ -172,7 +172,7 @@ function wprs_tg_set_primary_term(int $term_id, $is_primary = true)
 
     } else {
 
-        $primary_index = array_search($term_id, $primary_terms);
+        $primary_index = array_search($term_id, $primary_terms, true);
 
         if ($primary_index !== false) {
             unset($primary_terms[ $primary_index ]);
